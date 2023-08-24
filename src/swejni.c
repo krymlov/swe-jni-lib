@@ -1911,3 +1911,67 @@ Java_swisseph_SwephExp_swe_1split_1deg(JNIEnv *env, jclass swephexp, jdouble dde
     RLZ_INT_ARRAY_ELEMENTS_OK(isInt2Copy, iSgnArray, sgnOut)
     RLZ_DOUBLE_ARRAY_ELEMENTS_OK(isDblCopy, dSfrArray, sfrOut)
 }
+
+/*
+ * double swe_solcross(double x2cross, double jd_et, int32 flag, char *serr);
+ *
+ * Class:     swisseph_SwephExp
+ * Method:    swe_solcross
+ */
+JNIEXPORT jdouble JNICALL
+Java_swisseph_SwephExp_swe_1solcross(JNIEnv *env, jclass swephexp, jdouble x2cross, jdouble jd_et, jint flag, jobject errBuilder) {
+    DEFINE_CHAR_SERR
+
+    jdouble juldate = swe_solcross(x2cross, jd_et, flag, serr);
+
+    ERR_BUILDER_APPEND_IF_SERR
+    return juldate;
+}
+
+/*
+ * double swe_solcross_ut(double x2cross, double jd_ut, int32 flag, char *serr);
+ *
+ * Class:     swisseph_SwephExp
+ * Method:    swe_solcross_ut
+ */
+JNIEXPORT jdouble JNICALL
+Java_swisseph_SwephExp_swe_1solcross_1ut(JNIEnv *env, jclass swephexp, jdouble x2cross, jdouble jd_ut, jint flag, jobject errBuilder) {
+    DEFINE_CHAR_SERR
+
+    jdouble juldate = swe_solcross_ut(x2cross, jd_ut, flag, serr);
+
+    ERR_BUILDER_APPEND_IF_SERR
+    return juldate;
+}
+
+/*
+ * double swe_mooncross(double x2cross, double jd_et, int flag, char *serr);
+ *
+ * Class:     swisseph_SwephExp
+ * Method:    swe_mooncross
+ */
+JNIEXPORT jdouble JNICALL
+Java_swisseph_SwephExp_swe_1mooncross(JNIEnv *env, jclass swephexp, jdouble x2cross, jdouble jd_et, jint flag, jobject errBuilder) {
+    DEFINE_CHAR_SERR
+
+    jdouble juldate = swe_mooncross(x2cross, jd_et, flag, serr);
+
+    ERR_BUILDER_APPEND_IF_SERR
+    return juldate;
+}
+
+/*
+ * double swe_mooncross_ut(double x2cross, double jd_ut, int flag, char *serr);
+ *
+ * Class:     swisseph_SwephExp
+ * Method:    swe_mooncross_ut
+ */
+JNIEXPORT jdouble JNICALL
+Java_swisseph_SwephExp_swe_1mooncross_1ut(JNIEnv *env, jclass swephexp, jdouble x2cross, jdouble jd_ut, jint flag, jobject errBuilder) {
+    DEFINE_CHAR_SERR
+
+    jdouble juldate = swe_mooncross_ut(x2cross, jd_ut, flag, serr);
+
+    ERR_BUILDER_APPEND_IF_SERR
+    return juldate;
+}
