@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.17)
 
-project(swe-2.10.03j7d)
+project(swe-2.10.03j6f)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -26,4 +26,4 @@ set(JNI_INCLUDE_WIN32 "$ENV{JAVA_HOME}/include/win32")
 include_directories(${JNI_INCLUDE})
 include_directories(${JNI_INCLUDE_WIN32})
 
-add_library(swe-2.10.03j7d SHARED src/swecl.c src/swedate.c src/swehel.c src/swehouse.c src/swejni.c src/swejpl.c src/swemmoon.c src/swemplan.c src/sweph.c src/swephlib.c)
+add_library(swe-2.10.03j6f SHARED src/swecl.c src/swedate.c src/swehel.c src/swehouse.c src/swejni.c src/swejpl.c src/swemmoon.c src/swemplan.c src/sweph.c src/swephlib.c)
