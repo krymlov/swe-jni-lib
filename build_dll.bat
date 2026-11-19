@@ -35,8 +35,13 @@ rem ASCII only in this file: cmd reads it in the OEM code page.
 setlocal
 set "LIB_NAME=swe-2.10.03j6f"
 set "SRC=%~dp0src"
-set "OBJ=%~dp0obj\x64"
+rem   set ARCH=x86 & set NOPGO=1 & build_dll.bat - 32-bit DLL into Win32\Release\ for a 32-bit JVM
+rem   (the bits of swedll32.dll of swisseph-2026, which JHora loads; the x64 build differs in ~5%
+rem   of longitudes by an ulp). The PGO training needs a JVM of the same bitness.
+if "%ARCH%"=="" set "ARCH=x64"
+set "OBJ=%~dp0obj\%ARCH%"
 set "OUT=%~dp0x64\Release"
+if "%ARCH%"=="x86" set "OUT=%~dp0Win32\Release"
 set "TRAIN=%~dp0pgo\SwephExp.java"
 set "EPHE=%~1"
 if "%EPHE%"=="" set "EPHE=%SWE_EPHE%"
@@ -46,12 +51,12 @@ set "PATH=%PATH%;%VS%\Installer"
 set "FILES=swecl.c swedate.c swehel.c swehouse.c swejni.c swejpl.c swemmoon.c swemplan.c sweph.c swephlib.c"
 set "OBJS=swecl.obj swedate.obj swehel.obj swehouse.obj swejni.obj swejpl.obj swemmoon.obj swemplan.obj sweph.obj swephlib.obj"
 set "CFLAGS=/nologo /c /O2 /GF- /Gy /MT /W3 /Gd /wd4996 /Brepro /D NDEBUG /D _WINDOWS /D _USRDLL /D SWE2JNIDLL_EXPORTS /D _MBCS"
-set "LFLAGS=/nologo /DLL /Brepro /SUBSYSTEM:WINDOWS /MACHINE:X64"
+set "LFLAGS=/nologo /DLL /Brepro /SUBSYSTEM:WINDOWS /MACHINE:%ARCH%"
 
 if "%JAVA_HOME%"=="" (echo JAVA_HOME is not set & exit /b 1)
 if not exist "%JAVA_HOME%\include\jni.h" (echo no jni.h in %JAVA_HOME%\include & exit /b 1)
 set "INCL=/I "%JAVA_HOME%\include" /I "%JAVA_HOME%\include\win32""
-call "%VS%\18\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x64 >nul || exit /b 1
+call "%VS%\18\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" %ARCH% >nul || exit /b 1
 if not exist "%OBJ%\pgo" mkdir "%OBJ%\pgo"
 if not exist "%OBJ%\plain" mkdir "%OBJ%\plain"
 if not exist "%OUT%" mkdir "%OUT%"
